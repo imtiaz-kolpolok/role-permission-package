@@ -6,12 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Permission extends Model
 {
-    protected $fillable = ['name', 'guard_name', 'table_names', 'actions'];
+    protected $fillable = ['module_id', 'action_id', 'guard_name'];
 
-    protected $casts = [
-        'table_names' => 'array',
-        'actions' => 'array'
-    ];
+    public function module()
+    {
+        return $this->belongsTo(
+            config('role_permissions.models.module'),
+            'module_id'
+        );
+    }
+
+    public function action()
+    {
+        return $this->belongsTo(
+            config('role_permissions.models.action'),
+            'action_id'
+        );
+    }
 
     public function roles()
     {

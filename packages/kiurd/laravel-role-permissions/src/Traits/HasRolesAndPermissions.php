@@ -1,11 +1,8 @@
 <?php
 
-
 namespace kiurd\RolePermissions\Traits;
 
 use Illuminate\Support\Collection;
-use kiurd\RolePermissions\Models\Role;
-use kiurd\RolePermissions\Models\Permission;
 
 trait HasRolesAndPermissions
 {
@@ -55,7 +52,6 @@ trait HasRolesAndPermissions
                     ->where('guard_name', $guard)
                     ->firstOrFail();
             }
-
             return $role;
         })->map->id->toArray();
 
@@ -68,54 +64,24 @@ trait HasRolesAndPermissions
         return $this;
     }
 
-    public function removeRole($roles, $guard = null)
+    public function hasPermission($module, $action, $guard = null)
     {
         $guard = $guard ?? $this->getDefaultGuardName();
 
-        if (is_string($roles)) {
-            $roles = [$roles];
-        }
-
-        $roles = collect($roles)->map(function ($role) use ($guard) {
-            if (is_string($role)) {
-                return config('role_permissions.models.role')::where('name', $role)
-                    ->where('guard_name', $guard)
-                    ->firstOrFail();
-            }
-
-            return $role;
-        })->map->id->toArray();
-
-        $this->roles()->detach($roles);
-
-        return $this;
-    }
-
-    public function hasPermission($permissionName, $guardName= null)
-    {
-        $guardName = $guardName ?? $this->getDefaultGuardName();
-        return $this->roles()->whereHas('permissions', function ($query) use ($permissionName, $guardName) {
-            $query->where('permissions.name', $permissionName)
-                ->where('permissions.guard_name', $guardName);
-        })->exists();
-    }
-
-    public function hasTablePermission($tableName, $action, $guardName = null)
-    {
-        $guardName = $guardName ?? $this->getDefaultGuardName();
-
         return $this->roles()
-            ->whereHas('permissions', function ($query) use ($tableName, $action, $guardName) {
-                $query->where('guard_name', $guardName)
-                    ->where(function ($q) use ($tableName, $action) {
-                        $q->whereRaw("JSON_CONTAINS(table_names, ?)", ['"' . $tableName . '"'])
-                            ->whereRaw("JSON_CONTAINS(actions, ?)", ['"' . $action . '"']);
+            ->whereHas('permissions', function ($query) use ($module, $action, $guard) {
+                $query->where('permissions.guard_name', $guard)
+                    ->whereHas('module', function ($q) use ($module) {
+                        $q->where('name', $module);
+                    })
+                    ->whereHas('action', function ($q) use ($action) {
+                        $q->where('name', $action);
                     });
             })->exists();
     }
 
     protected function getDefaultGuardName()
     {
-        return 'web';
+        return config('auth.defaults.guard', 'web');
     }
 }

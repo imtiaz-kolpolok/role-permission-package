@@ -30,4 +30,14 @@ class Role extends Model
             'guard_name' => $permission->guard_name
         ]]);
     }
+
+    public function syncPermissions($permissions)
+    {
+        $this->permissions()->sync(
+            collect($permissions)->map(function($permission) {
+                return ['permission_id' => $permission->id, 'guard_name' => $permission->guard_name];
+            })
+        );
+        return $this;
+    }
 }
