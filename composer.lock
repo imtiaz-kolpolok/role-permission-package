@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "110413d1ad770bbd9019bfca42a5148e",
+    "content-hash": "fffa0361f5feda16916de81e436f23c4",
     "packages": [
         {
             "name": "brick/math",
@@ -1056,7 +1056,7 @@
         },
         {
             "name": "kiurd/laravel-role-permissions",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "packages/kiurd/laravel-role-permissions",
@@ -9054,6 +9054,6 @@
     "platform": {
         "php": "^8.2"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }

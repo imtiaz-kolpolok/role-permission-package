@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use kiurd\RolePermissions\Middleware\CheckPermission;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -11,9 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->append([
-            \kiurd\RolePermissions\Middleware\CheckPermission::class
-        ]);
+//        $middleware->append([
+//            CheckPermission::class
+//        ]);
 
         $middleware->alias([
                 'check.permission' => \kiurd\RolePermissions\Middleware\CheckPermission::class,

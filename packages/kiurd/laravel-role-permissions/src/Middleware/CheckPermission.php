@@ -1,17 +1,20 @@
 <?php
 
-
 namespace kiurd\RolePermissions\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CheckPermission
 {
-    public function handle(Request $request, Closure $next, $tableName = null, $action = null)
+    public function handle(Request $request, Closure $next, string $module, string $action)
     {
-//        dd($tableName, $action);
-        if (!auth()->user() || !auth()->user()->hasPermission($tableName, $action)) {
+        if (!$module || !$action) {
+            abort(403, 'Invalid permission check parameters.');
+        }
+
+        if (!auth()->check() || !auth()->user()->hasPermission($module, $action)) {
             abort(403, 'Unauthorized action.');
         }
 
