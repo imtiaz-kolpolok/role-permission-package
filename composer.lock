@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fffa0361f5feda16916de81e436f23c4",
+    "content-hash": "ec8a55704d9fbb8a49a9f01dc03e3845",
     "packages": [
         {
             "name": "brick/math",
@@ -1055,31 +1055,30 @@
             "time": "2023-12-03T19:50:20+00:00"
         },
         {
-            "name": "kiurd/laravel-role-permissions",
+            "name": "kiurd/role-based-access-control",
             "version": "dev-master",
             "dist": {
                 "type": "path",
-                "url": "packages/kiurd/laravel-role-permissions",
-                "reference": "02f72077622e291246ba6e46ef881b96d021176b"
+                "url": "packages/Kiurd/laravel-role-permissions",
+                "reference": "05eceebe46d0add6d21233fad6d6d394d8460e0f"
             },
             "require": {
-                "laravel/framework": "^9.0|^10.0|^11.0",
-                "php": "^8.2"
+                "php": "^8.0|^8.1|^8.2"
             },
             "type": "library",
             "extra": {
                 "laravel": {
                     "providers": [
-                        "kiurd\\RolePermissions\\RolePermissionsServiceProvider"
+                        "Kiurd\\RolePermissions\\RolePermissionsServiceProvider"
                     ],
                     "aliases": {
-                        "RolePermissions": "kiurd\\RolePermissions\\Facades\\RolePermissionsFacade"
+                        "RolePermissions": "Kiurd\\RolePermissions\\Facades\\RolePermissionsFacade"
                     }
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "kiurd\\RolePermissions\\": "src/"
+                    "Kiurd\\RolePermissions\\": "src/"
                 }
             },
             "license": [
@@ -2149,12 +2148,12 @@
             "version": "3.8.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/briannesbitt/Carbon.git",
+                "url": "https://github.com/CarbonPHP/carbon.git",
                 "reference": "129700ed449b1f02d70272d2ac802357c8c30c58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/129700ed449b1f02d70272d2ac802357c8c30c58",
+                "url": "https://api.github.com/repos/CarbonPHP/carbon/zipball/129700ed449b1f02d70272d2ac802357c8c30c58",
                 "reference": "129700ed449b1f02d70272d2ac802357c8c30c58",
                 "shasum": ""
             },
@@ -6279,6 +6278,67 @@
             "time": "2024-11-18T16:19:46+00:00"
         },
         {
+            "name": "laravel/breeze",
+            "version": "v2.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/breeze.git",
+                "reference": "d59702967b9ae21879df905d691a50132966c4ff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/breeze/zipball/d59702967b9ae21879df905d691a50132966c4ff",
+                "reference": "d59702967b9ae21879df905d691a50132966c4ff",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^11.0",
+                "illuminate/filesystem": "^11.0",
+                "illuminate/support": "^11.0",
+                "illuminate/validation": "^11.0",
+                "php": "^8.2.0",
+                "symfony/console": "^7.0"
+            },
+            "require-dev": {
+                "laravel/framework": "^11.0",
+                "orchestra/testbench-core": "^9.0",
+                "phpstan/phpstan": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Breeze\\BreezeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Breeze\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Minimal Laravel authentication scaffolding with Blade and Tailwind.",
+            "keywords": [
+                "auth",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/laravel/breeze/issues",
+                "source": "https://github.com/laravel/breeze"
+            },
+            "time": "2024-12-14T21:21:42+00:00"
+        },
+        {
             "name": "laravel/pail",
             "version": "v1.2.1",
             "source": {
@@ -8059,16 +8119,16 @@
         },
         {
             "name": "sebastian/comparator",
-            "version": "6.2.1",
+            "version": "6.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/comparator.git",
-                "reference": "43d129d6a0f81c78bee378b46688293eb7ea3739"
+                "reference": "d4e47a769525c4dd38cea90e5dcd435ddbbc7115"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/43d129d6a0f81c78bee378b46688293eb7ea3739",
-                "reference": "43d129d6a0f81c78bee378b46688293eb7ea3739",
+                "url": "https://api.github.com/repos/sebastianbergmann/comparator/zipball/d4e47a769525c4dd38cea90e5dcd435ddbbc7115",
+                "reference": "d4e47a769525c4dd38cea90e5dcd435ddbbc7115",
                 "shasum": ""
             },
             "require": {
@@ -8080,6 +8140,9 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "^11.4"
+            },
+            "suggest": {
+                "ext-bcmath": "For comparing BcMath\\Number objects"
             },
             "type": "library",
             "extra": {
@@ -8124,7 +8187,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/comparator/issues",
                 "security": "https://github.com/sebastianbergmann/comparator/security/policy",
-                "source": "https://github.com/sebastianbergmann/comparator/tree/6.2.1"
+                "source": "https://github.com/sebastianbergmann/comparator/tree/6.3.0"
             },
             "funding": [
                 {
@@ -8132,7 +8195,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-31T05:30:08+00:00"
+            "time": "2025-01-06T10:28:19+00:00"
         },
         {
             "name": "sebastian/complexity",
@@ -9047,7 +9110,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "kiurd/laravel-role-permissions": 20
+        "kiurd/role-based-access-control": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

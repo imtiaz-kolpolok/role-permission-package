@@ -1,114 +1,76 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Kiurd\RolePermissions\Models\Action;
+use Kiurd\RolePermissions\Models\Module;
+use Kiurd\RolePermissions\Models\Role;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/role-permission', function () {
-//    $user = User::create([
-//        'name' => 'Admin',
-//        'email' => 'example@gmail.com',
-//        'password' => bcrypt('123456')
-//    ]);
-    $user = User::find(1);
-//    $role = kiurd\RolePermissions\Models\Role::create(['name' => 'admin', 'description' => 'Admin Role']);
-    $role = kiurd\RolePermissions\Models\Role::where('name', 'admin')->first();
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-//    $permission = kiurd\RolePermissions\Models\Permission::insert([
-//        ['name' => 'create', 'guard_name' => 'web', 'table_names' => 'users'],
-//        ['name' => 'read', 'guard_name' => 'web', 'table_names' => 'users'],
-//        ['name' => 'update', 'guard_name' => 'web', 'table_names' => 'users'],
-//        ['name' => 'delete', 'guard_name' => 'web', 'table_names' => 'users'],
-//    ]);
-//
-    $permission = kiurd\RolePermissions\Models\Permission::where('name', 'create')->first();
-
-//    $role->permissions()->attach($permission->id);
-//    $user->assignRole('admin');
-
-//    dd($user->hasRole('admin'));
-    dd($user->hasPermission('create'));
-//    $user->hasTablePermission('posts', 'create');
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-    return 'Role and Permission created successfully';
-});
-
-Route::get('/role-permission-assign', function () {
-    $user = User::first();
-
-    if (!$user) {
-        $user = User::create([
+    Route::get('create-user', function () {
+        User::create([
             'name' => 'Admin',
-            'email' => 'example@gmail.com',
-            'password' => bcrypt('123456')
+            'email' => 'admin@admin.com',
+            'password' => bcrypt('password')
         ]);
-    }
+    })->middleware('permission:create');
 
-    $role = \kiurd\RolePermissions\Models\Role::where('name', 'admin')->first();
+    Route::get('create-role', function () {
+        Role::create([
+            'name' => 'Admin',
+            'description' => 'Admin Role'
+        ]);
+    })->middleware('permission:create');
 
-    if (!$role) {
-        $role = \kiurd\RolePermissions\Models\Role::create(['name' => 'admin', 'description' => 'Admin Role']);
-    }
-
-    $modules = ['users', 'roles', 'permissions', 'posts', 'categories'];
-
-    foreach ($modules as $module) {
-        $new_module = \kiurd\RolePermissions\Models\Module::where('name', $module)->first();
-        if (!$new_module) {
-            \kiurd\RolePermissions\Models\Module::create(['name' => $module, 'guard_name' => 'web']);
-        }
-    }
-
-
-    $action = ['create', 'read', 'update', 'delete', 'restore', 'forceDelete'];
-
-    foreach ($action as $act) {
-        $new_action = \kiurd\RolePermissions\Models\Action::where('name', $act)->first();
-        if (!$new_action) {
-            $action = \kiurd\RolePermissions\Models\Action::create(['name' => $act, 'guard_name' => 'web']);
-
-            foreach ($modules as $module) {
-                $module = \kiurd\RolePermissions\Models\Module::where('name', $module)->first();
-                $action->actionSyncToModule($module);
-            }
-
-        }else{
-            foreach ($modules as $module) {
-                $module = \kiurd\RolePermissions\Models\Module::where('name', $module)->first();
-                $new_action->actionSyncToModule($module);
-            }
-        }
-    }
-
-    $permissions = \kiurd\RolePermissions\Models\Permission::all();
-    foreach ($permissions as $permission) {
-        $role->givePermissionTo($permission);
-    }
-
-    $user->assignRole('admin');
-
-    return 'Role and Permission assigned successfully';
-});
-
-Route::get('/check-permission', function () {
-    $user = User::first();
-
-    if ($user->hasPermission('users', 'create')) {
-        // User has permission
-        return 'User has permission';
-    }else{
-        // User has no permission
-        return 'User has no permission';
-    }
-});
-
-Route::middleware(['check.permission:users,create'])->group(function () {
-    // Protected routes
-    Route::get('/protected', function () {
-        return 'Protected route';
+    Route::get('create-module', function (){
+        Module::create([
+            'name' => 'Admin',
+            'description' => 'Admin Module'
+        ]);
     });
+
+    Route::get('create-action', function (){
+        Action::create([
+            'name' => 'Admin',
+            'description' => 'Admin Action'
+        ]);
+    });
+
+    Route::get('create-permission', function (){
+        $module = Module::find(1);
+        $module->moduleAssignToActions([1,2,3]);
+    });
+
+    Route::get('create-role-permission', function (){
+        $role = Role::find(1);
+        $role->assignPermissions([1,2,3]);
+    });
+
+    Route::get('test-permission', function (){
+        dump(auth()->user());
+        dd(auth()->user()->hasPermission('users','create'));
+    });
+
+
+    Route::get('test-index',[\App\Http\Controllers\TestController::class,'index']);
+    Route::get('test-create',[\App\Http\Controllers\TestController::class,'create']);
+
+
+
 });
+
+require __DIR__.'/auth.php';

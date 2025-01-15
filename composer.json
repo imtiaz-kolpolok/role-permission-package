@@ -12,17 +12,18 @@
         "php": "^8.2",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9",
-        "kiurd/laravel-role-permissions": "dev-master"
+        "kiurd/role-based-access-control": "dev-master"
 
     },
     "repositories": [
         {
             "type": "path",
-            "url": "packages/kiurd/laravel-role-permissions"
+            "url": "packages/Kiurd/laravel-role-permissions"
         }
     ],
     "require-dev": {
         "fakerphp/faker": "^1.23",
+        "laravel/breeze": "^2.3",
         "laravel/pail": "^1.1",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.26",

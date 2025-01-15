@@ -17,9 +17,11 @@ return Application::configure(basePath: dirname(__DIR__))
 //        ]);
 
         $middleware->alias([
-                'check.permission' => \kiurd\RolePermissions\Middleware\CheckPermission::class,
+            'check.permission' => \kiurd\RolePermissions\Middleware\CheckPermission::class,
+            'permission' => \Kiurd\RolePermissions\Middleware\PermissionMiddleware::class,
 
-            ]);
+
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
